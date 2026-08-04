@@ -10,4 +10,4 @@ data/raw/*.json
 
 data/csv/*.csv
 
-test.ipynb
+*.ipynb
