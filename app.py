@@ -1,0 +1,47 @@
+from pathlib import Path
+import json
+
+import pandas as pd
+import requests
+#
+
+# Declare constants
+BASE_URL = "https://api.gbif.org/v1/occurrence/search"
+
+COUNTRY = "CH"
+START_YEAR = 2015
+END_YEAR = 2026
+
+LIMIT = 300
+
+RAW_FOLDER = Path("data/raw")
+CSV_FOLDER = Path("data/csv")
+
+KEEP_FIELDS = [
+    "key",
+    "datasetKey",
+    "lastInterpreted",
+    "acceptedScientificName",
+    "speciesKey",
+    "species",
+    "kingdom",
+    "class",
+    "order",
+    "family",
+    "genus",
+    "taxonRank",
+    "taxonomicStatus",
+    "eventDate",
+    "year",
+    "month",
+    "day",
+    "decimalLatitude",
+    "decimalLongitude",
+    "coordinateUncertaintyInMeters",
+    "countryCode",
+    "basisOfRecord",
+    "occurrenceStatus",
+    "issues",
+]
+
+
