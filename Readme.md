@@ -35,11 +35,6 @@ The project requires the following Python packages:
 | **pandas** | Data cleaning, transformation, analysis, and CSV export |
 | **pathlib** *(Standard Library)* | Cross-platform file and directory management |
 | **json** *(Standard Library)* | Reading and writing JSON files |
-| **numpy** | Numerical operations used by Pandas |
-| **python-dateutil** | Date parsing utilities |
-| **tzdata** | Time zone support |
-| **packaging** | Package version handling |
-| **six** | Python compatibility utilities |
 
 ---
 
