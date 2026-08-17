@@ -1,0 +1,37 @@
+version: 2
+
+models:
+  - name: fct_occurrences
+    description: "One row per GBIF occurrence."
+
+    columns:
+      - name: occurrence_key
+        description: "Unique GBIF occurrence identifier."
+        data_tests:
+          - not_null
+          - unique
+
+      - name: species_key
+        description: "Foreign key to dim_species."
+
+      - name: dataset_key
+        description: "Foreign key to dim_dataset."
+
+      - name: dataset_key
+        description: "Foreign key to dim_dataset."
+        data_tests:
+          - relationships:
+              arguments: 
+                to: ref('dim_dataset')
+                field: dataset_key
+
+      - name: species_key
+        description: "Foreign key to dim_species."
+        data_tests:
+          - relationships:
+              arguments: 
+                to: ref('dim_species')
+                field: species_key
+
+        
+

@@ -1,0 +1,33 @@
+name: "bird_project_week2"
+version: "1.0.0"
+
+profile: "bird_project_week2"
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  bird_project_week2:
+    curated:
+      +schema: CURATED
+
+      staging:
+        +materialized: view
+
+      dimensions:
+        +materialized: table
+
+      facts:
+        +materialized: table
+
+    serving:
+      +schema: SERVING
+      +materialized: table
