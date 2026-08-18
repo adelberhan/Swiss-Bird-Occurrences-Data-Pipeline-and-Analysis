@@ -50,32 +50,32 @@ KEEP_FIELDS = [
     "issues",
 ]
 
-FIELD_RENAMED = {
-    "key": "gbif_occurrence_id",
-    "datasetKey": "dataset_uuid",
-    "lastInterpreted": "gbif_last_processed_at",
-    "acceptedScientificName": "accepted_scientific_name",
-    "speciesKey": "species_taxon_id",
-    "species": "species_name",
-    "kingdom": "kingdom_name",
-    "class": "class_name",
-    "order": "order_name",
-    "family": "family_name",
-    "genus": "genus_name",
-    "taxonRank": "taxonomic_rank",
-    "taxonomicStatus": "taxonomic_status",
-    "eventDate": "observation_datetime",
-    "year": "observation_year",
-    "month": "observation_month",
-    "day": "observation_day",
-    "decimalLatitude": "latitude",
-    "decimalLongitude": "longitude",
-    "coordinateUncertaintyInMeters": "coordinate_uncertainty_meters",
-    "countryCode": "country_iso_code",
-    "basisOfRecord": "record_basis_type",
-    "occurrenceStatus": "presence_status",
-    "issues": "data_quality_issues",
-}
+# FIELD_RENAMED = {
+#     "key": "gbif_occurrence_id",
+#     "datasetKey": "dataset_uuid",
+#     "lastInterpreted": "gbif_last_processed_at",
+#     "acceptedScientificName": "accepted_scientific_name",
+#     "speciesKey": "species_taxon_id",
+#     "species": "species_name",
+#     "kingdom": "kingdom_name",
+#     "class": "class_name",
+#     "order": "order_name",
+#     "family": "family_name",
+#     "genus": "genus_name",
+#     "taxonRank": "taxonomic_rank",
+#     "taxonomicStatus": "taxonomic_status",
+#     "eventDate": "observation_datetime",
+#     "year": "observation_year",
+#     "month": "observation_month",
+#     "day": "observation_day",
+#     "decimalLatitude": "latitude",
+#     "decimalLongitude": "longitude",
+#     "coordinateUncertaintyInMeters": "coordinate_uncertainty_meters",
+#     "countryCode": "country_iso_code",
+#     "basisOfRecord": "record_basis_type",
+#     "occurrenceStatus": "presence_status",
+#     "issues": "data_quality_issues",
+# }
 
 # Create folders
 def create_folders():
@@ -159,7 +159,7 @@ def clean_dataframe(records):
         cleaned_records.append(raw)
 
     df = pd.DataFrame(cleaned_records)
-    return df.rename(columns=FIELD_RENAMED)
+    return df
 
 # Save as csv file
 

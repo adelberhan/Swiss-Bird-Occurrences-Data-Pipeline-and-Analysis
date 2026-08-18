@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: dim_species
+    description: "One row per species."
+
+    columns:
+      - name: species_key
+        description: "Unique GBIF species identifier."
+        data_tests:
+          - not_null
+          - unique
+
+  - name: dim_dataset
+    description: "One row per GBIF dataset."
+
+    columns:
+      - name: dataset_key
+        description: "GBIF dataset identifier."
+        data_tests:
+          - not_null
+          - unique
