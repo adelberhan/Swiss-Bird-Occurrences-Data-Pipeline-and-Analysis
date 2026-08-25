@@ -1,6 +1,6 @@
 import dlt
 import requests
-from config import KEEP_FIELDS
+from .config import KEEP_FIELDS
 
 
 @dlt.resource(
