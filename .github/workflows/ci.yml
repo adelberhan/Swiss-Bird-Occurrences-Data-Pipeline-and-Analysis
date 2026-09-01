@@ -24,6 +24,7 @@ jobs:
         with:
           args: check .
 
+
   dbt-parse:
     name: dbt Parse
     runs-on: ubuntu-latest
@@ -32,15 +33,26 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build Docker image
+      - name: Create .env
+        run: |
+          cat > .env <<EOF
+          SNOWFLAKE_ACCOUNT=${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER=${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD=${{ secrets.SNOWFLAKE_PASSWORD }}
+          SNOWFLAKE_ROLE=${{ secrets.SNOWFLAKE_ROLE }}
+          SNOWFLAKE_WAREHOUSE=${{ secrets.SNOWFLAKE_WAREHOUSE }}
+          BIRD_DATA_DB=${{ secrets.BIRD_DATA_DB }}
+          EOF
+
+      - name: Build code location image
         run: docker compose build code_location
 
       - name: Run dbt parse
         run: >
           docker compose run --rm
-          -e DBT_PROFILES_DIR=/app/dbt-Swiss-Bird-Occurrences-Data-Pipeline-and-Analysis/bird_project_week2
           code_location
           dbt parse
+
 
   dagster-check:
     name: Dagster Definitions Check
@@ -50,7 +62,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Build Docker image
+      - name: Create .env
+        run: |
+          cat > .env <<EOF
+          SNOWFLAKE_ACCOUNT=${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_USER=${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD=${{ secrets.SNOWFLAKE_PASSWORD }}
+          SNOWFLAKE_ROLE=${{ secrets.SNOWFLAKE_ROLE }}
+          SNOWFLAKE_WAREHOUSE=${{ secrets.SNOWFLAKE_WAREHOUSE }}
+          BIRD_DATA_DB=${{ secrets.BIRD_DATA_DB }}
+          EOF
+
+      - name: Build code location image
         run: docker compose build code_location
 
       - name: Check Dagster definitions
