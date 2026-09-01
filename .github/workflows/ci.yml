@@ -50,6 +50,7 @@ jobs:
       - name: Run dbt parse
         run: >
           docker compose run --rm
+          --workdir /app/dbt-Swiss-Bird-Occurrences-Data-Pipeline-and-Analysis/bird_project_week2
           code_location
           dbt parse
 
@@ -76,12 +77,13 @@ jobs:
       - name: Build code location image
         run: docker compose build code_location
 
-      - name: Check Dagster definitions
-        run: >
-          docker compose run --rm
-          code_location
-          dagster
-          definitions
-          validate
-          -m
-          dagster_project.definitions
+      - name: Generate dbt manifest and validate Dagster
+        run: |
+          docker compose run --rm \
+            --workdir /app/dbt-Swiss-Bird-Occurrences-Data-Pipeline-and-Analysis/bird_project_week2 \
+            code_location \
+            sh -c '
+              dbt parse &&
+              cd /app/dagster_project &&
+              dagster definitions validate -m dagster_project.definitions
+            '
