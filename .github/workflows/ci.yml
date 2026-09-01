@@ -19,7 +19,22 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create CI environment file
-        run: touch .env
+        env:
+          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+          SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
+          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
+          SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
+        run: |
+          cat > .env <<EOF
+          SNOWFLAKE_ACCOUNT=$SNOWFLAKE_ACCOUNT
+          SNOWFLAKE_DATABASE=$SNOWFLAKE_DATABASE
+          SNOWFLAKE_USER=$SNOWFLAKE_USER
+          SNOWFLAKE_PASSWORD=$SNOWFLAKE_PASSWORD
+          SNOWFLAKE_WAREHOUSE=$SNOWFLAKE_WAREHOUSE
+          SNOWFLAKE_ROLE=$SNOWFLAKE_ROLE
+          EOF
 
       - name: Validate Docker Compose
         run: docker compose config --quiet
