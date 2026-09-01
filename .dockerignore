@@ -1,3 +1,14 @@
+.venv
+__pycache__
+*.pyc
+.git
+.gitignore
+.env
+.tmp_dagster_home*
+.pytest_cache
+.ipynb_checkpoints
+
+
 .venv/
 
 __pycache__/

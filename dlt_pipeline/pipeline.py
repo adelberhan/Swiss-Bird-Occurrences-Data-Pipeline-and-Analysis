@@ -6,6 +6,7 @@ from .config import KEEP_FIELDS
 @dlt.resource(
     name="occurrences",
     table_name="OCCURRENCES_RAW",
+    write_disposition="replace",
 )
 def occurrences():
     url = "https://api.gbif.org/v1/occurrence/search"

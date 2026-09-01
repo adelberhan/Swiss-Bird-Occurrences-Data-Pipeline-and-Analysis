@@ -1,14 +1,13 @@
 WITH issue_flags AS (
 
     SELECT
-        occurrence_key,
+        f.occurrence_key,
         TRIM(issue.value::VARCHAR) AS issue
 
-    FROM {{ ref('fct_occurrences') }},
-    LATERAL SPLIT_TO_TABLE(issues, ',') AS issue
+    FROM {{ ref('fct_occurrences') }} AS f,
+         LATERAL FLATTEN(input => f.issues) AS issue
 
-    WHERE issues IS NOT NULL
-      AND TRIM(issues) != ''
+    WHERE f.issues IS NOT NULL
 ),
 
 issue_counts AS (
@@ -24,18 +23,23 @@ issue_counts AS (
 
 total_records AS (
 
-    SELECT COUNT(*) AS total_count
+    SELECT
+        COUNT(*) AS total_count
+
     FROM {{ ref('fct_occurrences') }}
 )
 
 SELECT
     issue,
     record_count,
+
     ROUND(
-        100.0 * record_count / total_count,
+        100.0 * record_count / NULLIF(total_count, 0),
         2
     ) AS pct_of_total
 
 FROM issue_counts
+
 CROSS JOIN total_records
+
 ORDER BY record_count DESC
