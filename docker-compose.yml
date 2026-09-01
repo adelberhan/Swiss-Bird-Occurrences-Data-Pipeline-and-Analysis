@@ -1,0 +1,90 @@
+services:
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: dagster
+      POSTGRES_PASSWORD: dagster
+      POSTGRES_DB: dagster
+    volumes:
+      - dagster-postgres:/var/lib/postgresql/data
+
+  code_location:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:
+      [
+        "dagster",
+        "api",
+        "grpc",
+        "-m",
+        "dagster_project.definitions",
+        "-h",
+        "0.0.0.0",
+        "-p",
+        "4000"
+      ]
+    env_file:
+      - .env
+    environment:
+      DAGSTER_HOME: /app/dagster_project
+      DBT_PROFILES_DIR: /app/dbt-Swiss-Bird-Occurrences-Data-Pipeline-and-Analysis/bird_project_week2
+      PYTHONPATH: /app
+    depends_on:
+      - postgres
+
+  webserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:
+      [
+        "dagster-webserver",
+        "-h",
+        "0.0.0.0",
+        "-p",
+        "3000",
+        "-w",
+        "/app/dagster_project/workspace.yaml"
+      ]
+    env_file:
+      - .env
+    environment:
+      DAGSTER_HOME: /app/dagster_project
+      DBT_PROFILES_DIR: /app/dbt-Swiss-Bird-Occurrences-Data-Pipeline-and-Analysis/bird_project_week2
+      PYTHONPATH: /app
+    volumes:
+      - ./dagster.yaml:/app/dagster_project/dagster.yaml
+      - ./workspace.yaml:/app/dagster_project/workspace.yaml
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - code_location
+
+  daemon:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command:
+      [
+        "dagster-daemon",
+        "run",
+        "-w",
+        "/app/dagster_project/workspace.yaml"
+      ]
+    env_file:
+      - .env
+    environment:
+      DAGSTER_HOME: /app/dagster_project
+      DBT_PROFILES_DIR: /app/dbt-Swiss-Bird-Occurrences-Data-Pipeline-and-Analysis/bird_project_week2
+      PYTHONPATH: /app
+    volumes:
+      - ./dagster.yaml:/app/dagster_project/dagster.yaml
+      - ./workspace.yaml:/app/dagster_project/workspace.yaml
+    depends_on:
+      - postgres
+      - code_location
+volumes:
+  dagster-postgres:

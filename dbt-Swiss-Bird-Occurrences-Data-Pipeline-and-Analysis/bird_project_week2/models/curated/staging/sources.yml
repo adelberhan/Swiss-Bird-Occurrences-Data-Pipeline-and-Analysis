@@ -5,6 +5,10 @@ sources:
     description: "BIRD_DATA_DB"
     database: BIRD_DATA_DB
     schema: RAW_DATA
+
     tables:
       - name: OCCURRENCES_RAW
         description: "Raw bird occurrence data."
+
+      - name: OCCURRENCES_RAW__ISSUES
+        description: "Issue flags associated with occurrence records."

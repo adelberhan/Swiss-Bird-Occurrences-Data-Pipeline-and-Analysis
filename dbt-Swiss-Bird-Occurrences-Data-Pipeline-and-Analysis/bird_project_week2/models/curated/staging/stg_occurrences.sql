@@ -1,10 +1,10 @@
 SELECT
-    TRY_TO_NUMBER(KEY) AS occurrence_key,
-    TO_VARCHAR(DATASETKEY) AS dataset_key,
-    LASTINTERPRETED AS last_interpreted,
+    "KEY" AS occurrence_key,
+    TO_VARCHAR(DATASET_KEY) AS dataset_key,
+    LAST_INTERPRETED AS last_interpreted,
 
-    TO_VARCHAR(ACCEPTEDSCIENTIFICNAME) AS accepted_scientific_name,
-    TRY_TO_NUMBER(SPECIESKEY) AS species_key,
+    TO_VARCHAR(ACCEPTED_SCIENTIFIC_NAME) AS accepted_scientific_name,
+    SPECIES_KEY AS species_key,
     TO_VARCHAR(SPECIES) AS species_name,
 
     TO_VARCHAR(KINGDOM) AS kingdom,
@@ -13,23 +13,24 @@ SELECT
     TO_VARCHAR(FAMILY) AS family,
     TO_VARCHAR(GENUS) AS genus,
 
-    TO_VARCHAR(TAXONRANK) AS taxon_rank,
-    TO_VARCHAR(TAXONOMICSTATUS) AS taxonomic_status,
+    TO_VARCHAR(TAXON_RANK) AS taxon_rank,
+    TO_VARCHAR(TAXONOMIC_STATUS) AS taxonomic_status,
 
-    TRY_TO_DATE(EVENTDATE) AS event_date,
-    TRY_TO_NUMBER(YEAR) AS year,
-    TRY_TO_NUMBER(MONTH) AS month,
-    TRY_TO_NUMBER(DAY) AS day,
+    TO_DATE(EVENT_DATE) AS event_date,
+    YEAR AS year,
+    MONTH AS month,
+    DAY AS day,
 
-    TRY_TO_DOUBLE(DECIMALLATITUDE) AS decimal_latitude,
-    TRY_TO_DOUBLE(DECIMALLONGITUDE) AS decimal_longitude,
-    TRY_TO_DOUBLE(COORDINATEUNCERTAINTYINMETERS) AS coordinate_uncertainty_m,
+    DECIMAL_LATITUDE AS decimal_latitude,
+    DECIMAL_LONGITUDE AS decimal_longitude,
+    COORDINATE_UNCERTAINTY_IN_METERS AS coordinate_uncertainty_m,
 
-    TO_VARCHAR(COUNTRYCODE) AS country_code,
-    TO_VARCHAR(BASISOFRECORD) AS basis_of_record,
-    TO_VARCHAR(OCCURRENCESTATUS) AS occurrence_status,
+    TO_VARCHAR(COUNTRY_CODE) AS country_code,
+    TO_VARCHAR(BASIS_OF_RECORD) AS basis_of_record,
+    TO_VARCHAR(OCCURRENCE_STATUS) AS occurrence_status,
 
-    TO_VARCHAR(ISSUES) AS issues,
-    TO_VARCHAR(MEDIA_URL) AS media_url
+    TO_VARCHAR(MEDIA_URL) AS media_url,
+
+    TO_VARCHAR(_DLT_ID) AS dlt_id
 
 FROM {{ source('raw_data', 'OCCURRENCES_RAW') }}

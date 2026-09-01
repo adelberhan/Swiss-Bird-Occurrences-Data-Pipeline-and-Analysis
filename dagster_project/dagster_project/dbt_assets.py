@@ -1,3 +1,4 @@
+from pathlib import Path
 from typing import Any, Mapping
 
 import dagster as dg
@@ -7,13 +8,19 @@ from dagster_dbt import (
     dbt_assets,
 )
 
+# Project root:
+# /app when running inside Docker
+# project root when running locally
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
 DBT_PROJECT_DIR = (
-    "D:/Docements/WWF/wilddata/"
-    "dbt-Swiss-Bird-Occurrences-Data-Pipeline-and-Analysis/"
-    "bird_project_week2"
+    PROJECT_ROOT
+    / "dbt-Swiss-Bird-Occurrences-Data-Pipeline-and-Analysis"
+    / "bird_project_week2"
 )
 
-DBT_MANIFEST_PATH = f"{DBT_PROJECT_DIR}/target/manifest.json"
+DBT_MANIFEST_PATH = DBT_PROJECT_DIR / "target" / "manifest.json"
 
 
 class CustomDagsterDbtTranslator(DagsterDbtTranslator):
@@ -35,12 +42,12 @@ class CustomDagsterDbtTranslator(DagsterDbtTranslator):
 
 
 dbt_resource = DbtCliResource(
-    project_dir=DBT_PROJECT_DIR,
+    project_dir=str(DBT_PROJECT_DIR),
 )
 
 
 @dbt_assets(
-    manifest=DBT_MANIFEST_PATH,
+    manifest=str(DBT_MANIFEST_PATH),
     dagster_dbt_translator=CustomDagsterDbtTranslator(),
 )
 def swiss_bird_dbt_assets(
