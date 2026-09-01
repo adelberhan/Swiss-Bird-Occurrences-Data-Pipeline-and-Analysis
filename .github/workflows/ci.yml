@@ -1,49 +1,64 @@
 name: CI
 
 on:
+  pull_request:
+    branches:
+      - master
+
   push:
     branches:
       - dev
       - master
 
-  pull_request:
-    branches:
-      - master
-
 jobs:
-  build:
+  lint:
+    name: Lint
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Create CI environment file
-        env:
-          SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
-          SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
-          SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
-          SNOWFLAKE_PASSWORD: ${{ secrets.SNOWFLAKE_PASSWORD }}
-          SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
-        run: |
-          cat > .env <<EOF
-          SNOWFLAKE_ACCOUNT=$SNOWFLAKE_ACCOUNT
-          SNOWFLAKE_DATABASE=$SNOWFLAKE_DATABASE
-          SNOWFLAKE_USER=$SNOWFLAKE_USER
-          SNOWFLAKE_PASSWORD=$SNOWFLAKE_PASSWORD
-          SNOWFLAKE_WAREHOUSE=$SNOWFLAKE_WAREHOUSE
-          SNOWFLAKE_ROLE=$SNOWFLAKE_ROLE
-          EOF
+      - name: Run Ruff
+        uses: astral-sh/ruff-action@v3
+        with:
+          args: check .
 
-      - name: Validate Docker Compose
-        run: docker compose config --quiet
+  dbt-parse:
+    name: dbt Parse
+    runs-on: ubuntu-latest
 
-      - name: Build Docker images
-        run: docker compose build
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Start services
-        run: docker compose up -d
+      - name: Build Docker image
+        run: docker compose build code_location
 
-      - name: Check services
-        run: docker compose ps
+      - name: Run dbt parse
+        run: >
+          docker compose run --rm
+          -e DBT_PROFILES_DIR=/app/dbt-Swiss-Bird-Occurrences-Data-Pipeline-and-Analysis/bird_project_week2
+          code_location
+          dbt parse
+
+  dagster-check:
+    name: Dagster Definitions Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker compose build code_location
+
+      - name: Check Dagster definitions
+        run: >
+          docker compose run --rm
+          code_location
+          dagster
+          definitions
+          validate
+          -m
+          dagster_project.definitions
