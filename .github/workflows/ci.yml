@@ -18,6 +18,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Create CI environment file
+        run: touch .env
+
       - name: Validate Docker Compose
         run: docker compose config --quiet
 
