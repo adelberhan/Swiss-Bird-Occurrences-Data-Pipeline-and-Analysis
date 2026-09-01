@@ -1,6 +1,5 @@
-import os
-from pathlib import Path
 import sys
+from pathlib import Path
 
 # DLT project root
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -10,7 +9,7 @@ if str(PROJECT_ROOT) not in sys.path:
     
 import dagster as dg
 
-from dlt_pipeline.pipeline import pipeline, gbif_source
+from dlt_pipeline.pipeline import gbif_source, pipeline
 
 
 @dg.asset

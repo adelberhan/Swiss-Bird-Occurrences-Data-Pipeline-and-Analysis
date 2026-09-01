@@ -1,8 +1,7 @@
 import dagster as dg
 
 from dagster_project.assets import gbif_dlt_asset
-from dagster_project.dbt_assets import swiss_bird_dbt_assets, dbt_resource
-
+from dagster_project.dbt_assets import dbt_resource, swiss_bird_dbt_assets
 
 # Job that materializes the whole pipeline
 bird_pipeline_job = dg.define_asset_job(
