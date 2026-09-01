@@ -37,11 +37,12 @@ jobs:
         run: |
           cat > .env <<EOF
           SNOWFLAKE_ACCOUNT=${{ secrets.SNOWFLAKE_ACCOUNT }}
-          SNOWFLAKE_USER=${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_DATABASE=${{ secrets.SNOWFLAKE_DATABASE }}
           SNOWFLAKE_PASSWORD=${{ secrets.SNOWFLAKE_PASSWORD }}
           SNOWFLAKE_ROLE=${{ secrets.SNOWFLAKE_ROLE }}
+          SNOWFLAKE_SCHEMA=${{ secrets.SNOWFLAKE_SCHEMA }}
+          SNOWFLAKE_USER=${{ secrets.SNOWFLAKE_USER }}
           SNOWFLAKE_WAREHOUSE=${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          BIRD_DATA_DB=${{ secrets.BIRD_DATA_DB }}
           EOF
 
       - name: Build code location image
@@ -67,11 +68,12 @@ jobs:
         run: |
           cat > .env <<EOF
           SNOWFLAKE_ACCOUNT=${{ secrets.SNOWFLAKE_ACCOUNT }}
-          SNOWFLAKE_USER=${{ secrets.SNOWFLAKE_USER }}
+          SNOWFLAKE_DATABASE=${{ secrets.SNOWFLAKE_DATABASE }}
           SNOWFLAKE_PASSWORD=${{ secrets.SNOWFLAKE_PASSWORD }}
           SNOWFLAKE_ROLE=${{ secrets.SNOWFLAKE_ROLE }}
+          SNOWFLAKE_SCHEMA=${{ secrets.SNOWFLAKE_SCHEMA }}
+          SNOWFLAKE_USER=${{ secrets.SNOWFLAKE_USER }}
           SNOWFLAKE_WAREHOUSE=${{ secrets.SNOWFLAKE_WAREHOUSE }}
-          BIRD_DATA_DB=${{ secrets.BIRD_DATA_DB }}
           EOF
 
       - name: Build code location image
