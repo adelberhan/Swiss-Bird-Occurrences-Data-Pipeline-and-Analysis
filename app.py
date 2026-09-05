@@ -4,7 +4,6 @@ from pathlib import Path
 import pandas as pd
 import requests as req
 
-
 # Declare constants values
 
 BASE_URL = "https://api.gbif.org/v1/occurrence/search"
