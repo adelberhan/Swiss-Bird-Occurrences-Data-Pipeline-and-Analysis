@@ -9,10 +9,6 @@ from dagster_dbt import (
     dbt_assets,
 )
 
-# Project root:
-# /app when running inside Docker
-# project root when running locally
-
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 DBT_PROJECT_DIR = (
@@ -23,6 +19,11 @@ DBT_PROJECT_DIR = (
 
 DBT_MANIFEST_PATH = DBT_PROJECT_DIR / "target" / "manifest.json"
 
+print(f"DBT PROJECT DIR: {DBT_PROJECT_DIR}")
+print(f"DBT MANIFEST PATH: {DBT_MANIFEST_PATH}")
+print(f"PROJECT EXISTS: {DBT_PROJECT_DIR.exists()}")
+print(f"MANIFEST EXISTS: {DBT_MANIFEST_PATH.exists()}")
+
 
 class CustomDagsterDbtTranslator(DagsterDbtTranslator):
 
@@ -31,8 +32,6 @@ class CustomDagsterDbtTranslator(DagsterDbtTranslator):
         dbt_resource_props: Mapping[str, Any],
     ) -> dg.AssetKey:
 
-        # Map the dbt source OCCURRENCES_RAW
-        # to the Dagster DLT asset
         if (
             dbt_resource_props.get("resource_type") == "source"
             and dbt_resource_props.get("name") == "OCCURRENCES_RAW"

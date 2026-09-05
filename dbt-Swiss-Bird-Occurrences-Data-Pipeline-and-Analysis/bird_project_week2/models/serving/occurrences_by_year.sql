@@ -2,7 +2,7 @@ SELECT
     species_key,
     year,
     COUNT(*) as occurrence_count
-FROM {{ ref('stg_occurrences') }}
+FROM {{ ref('fct_occurrences') }}
 WHERE
     species_key IS NOT NULL
 GROUP BY
