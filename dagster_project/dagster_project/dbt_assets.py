@@ -13,7 +13,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 DBT_PROJECT_DIR = (
     PROJECT_ROOT
-    / "dbt-Swiss-Bird-Occurrences-Data-Pipeline-and-Analysis"
+    / "dbt-Swiss-Bird-Pipeline"
     / "bird_project_week2"
 )
 
