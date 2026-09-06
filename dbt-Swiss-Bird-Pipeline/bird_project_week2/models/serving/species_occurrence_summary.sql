@@ -12,7 +12,7 @@ SELECT
         2
     ) as percentage_observed
 FROM
-    {{ ref('stg_occurrences') }}
+    {{ ref('fct_occurrences') }}
 WHERE
     species_key IS NOT NULL
 GROUP BY

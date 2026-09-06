@@ -7,7 +7,8 @@ WORKDIR /app/dagster_project
 COPY requirements.txt /app/requirements.txt
 
 
-RUN apt-get update \
+RUN sed -i 's|http://deb.debian.org|https://deb.debian.org|g' /etc/apt/sources.list.d/debian.sources \
+    && apt-get update \
     && apt-get install -y --no-install-recommends git \
     && rm -rf /var/lib/apt/lists/*
     
@@ -18,7 +19,7 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 COPY . /app
 
 ENV PYTHONPATH=/app
-ENV DBT_PROFILES_DIR=/app/dbt-Swiss-Bird-Occurrences-Data-Pipeline-and-Analysis/bird_project_week2
+ENV DBT_PROFILES_DIR=/app/dbt-Swiss-Bird-Pipeline/bird_project_week2
 
 EXPOSE 3000
 
