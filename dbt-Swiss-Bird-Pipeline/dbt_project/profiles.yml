@@ -1,7 +1,5 @@
 bird_project_week2:
-
   outputs:
-
     dev:
       account: "{{ env_var('SNOWFLAKE_ACCOUNT') }}"
       database: "{{ env_var('SNOWFLAKE_DATABASE') }}"
