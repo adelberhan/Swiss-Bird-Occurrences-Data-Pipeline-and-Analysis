@@ -19,7 +19,7 @@ RUN pip install --no-cache-dir -r /app/requirements.txt
 COPY . /app
 
 ENV PYTHONPATH=/app
-ENV DBT_PROFILES_DIR=/app/dbt-Swiss-Bird-Pipeline/bird_project_week2
+ENV DBT_PROFILES_DIR=/app/dbt-Swiss-Bird-Pipeline/dbt_project
 
 EXPOSE 3000
 

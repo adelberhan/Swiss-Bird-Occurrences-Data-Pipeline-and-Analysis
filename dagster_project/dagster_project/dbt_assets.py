@@ -1,6 +1,4 @@
-from collections.abc import Mapping
 from pathlib import Path
-from typing import Any
 
 import dagster as dg
 from dagster_dbt import (
@@ -14,7 +12,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DBT_PROJECT_DIR = (
     PROJECT_ROOT
     / "dbt-Swiss-Bird-Pipeline"
-    / "bird_project_week2"
+    / "dbt_project"
 )
 
 DBT_MANIFEST_PATH = DBT_PROJECT_DIR / "target" / "manifest.json"
@@ -27,17 +25,12 @@ print(f"MANIFEST EXISTS: {DBT_MANIFEST_PATH.exists()}")
 
 class CustomDagsterDbtTranslator(DagsterDbtTranslator):
 
-    def get_asset_key(
-        self,
-        dbt_resource_props: Mapping[str, Any],
-    ) -> dg.AssetKey:
+    def get_asset_key(self, dbt_resource_props):
+        resource_type = dbt_resource_props.get("resource_type")
+        resource_name = dbt_resource_props.get("name")
 
-        if (
-            dbt_resource_props.get("resource_type") == "source"
-            and dbt_resource_props.get("name") == "OCCURRENCES_RAW"
-        ):
+        if resource_type == "source" and resource_name == "OCCURRENCES_RAW":
             return dg.AssetKey(["gbif_dlt_asset"])
-
         return super().get_asset_key(dbt_resource_props)
 
 

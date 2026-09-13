@@ -27,7 +27,7 @@ models:
 
       facts:
         +materialized: table
-
+        
     serving:
       +schema: SERVING
       +materialized: table
