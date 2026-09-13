@@ -9,10 +9,12 @@ if str(PROJECT_ROOT) not in sys.path:
     
 import dagster as dg
 
-from dlt_pipeline.pipeline import gbif_source, pipeline
+# pyrefly: ignore [missing-import]
+from dlt_project.pipeline import gbif_source, pipeline
 
 
 @dg.asset
 def gbif_dlt_asset():
+    """Run the DLT pipeline to ingest GBIF bird occurrence data."""
     load_info = pipeline.run(gbif_source())
     return load_info

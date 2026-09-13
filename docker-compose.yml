@@ -29,7 +29,7 @@ services:
       - .env
     environment:
       DAGSTER_HOME: /app/dagster_project
-      DBT_PROFILES_DIR: /app/dbt-Swiss-Bird-Pipeline/bird_project_week2
+      DBT_PROFILES_DIR: /app/dbt-Swiss-Bird-Pipeline/dbt_project
       PYTHONPATH: /app
     depends_on:
       - postgres
@@ -52,7 +52,7 @@ services:
       - .env
     environment:
       DAGSTER_HOME: /app/dagster_project
-      DBT_PROFILES_DIR: /app/dbt-Swiss-Bird-Pipeline/bird_project_week2
+      DBT_PROFILES_DIR: /app/dbt-Swiss-Bird-Pipeline/dbt_project
       PYTHONPATH: /app
     volumes:
       - ./dagster.yaml:/app/dagster_project/dagster.yaml
@@ -78,7 +78,7 @@ services:
       - .env
     environment:
       DAGSTER_HOME: /app/dagster_project
-      DBT_PROFILES_DIR: /app/dbt-Swiss-Bird-Pipeline/bird_project_week2
+      DBT_PROFILES_DIR: /app/dbt-Swiss-Bird-Pipeline/dbt_project
       PYTHONPATH: /app
     volumes:
       - ./dagster.yaml:/app/dagster_project/dagster.yaml
